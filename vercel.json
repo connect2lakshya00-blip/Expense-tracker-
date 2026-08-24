@@ -1,0 +1,29 @@
+{
+  "services": {
+    "frontend": {
+      "root": "frontend",
+      "framework": "vite",
+      "buildCommand": "npm run build",
+      "outputDirectory": "dist",
+      "envVars": {
+        "VITE_API_URL": {
+          "description": "Backend API URL"
+        }
+      }
+    },
+    "backend": {
+      "root": "backend",
+      "framework": "express",
+      "buildCommand": "npm install",
+      "startCommand": "node src/server.js",
+      "envVars": {
+        "MONGO_URI": {
+          "description": "MongoDB Atlas connection string"
+        },
+        "NODE_ENV": {
+          "value": "production"
+        }
+      }
+    }
+  }
+}
