@@ -1,0 +1,28 @@
+services:
+  # ── Backend API ─────────────────────────────────────────────────────────
+  - type: web
+    name: expenseflow-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false   # set manually in Render dashboard
+
+  # ── Frontend Static Site ─────────────────────────────────────────────────
+  - type: web
+    name: expenseflow-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false   # set manually after backend deploys
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
