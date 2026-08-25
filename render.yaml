@@ -21,7 +21,7 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        sync: false   # set manually after backend deploys
+        value: https://expenseflow-backend-j1a1.onrender.com/api
     routes:
       - type: rewrite
         source: /*
