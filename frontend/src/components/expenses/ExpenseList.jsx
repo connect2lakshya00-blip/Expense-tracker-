@@ -41,18 +41,12 @@ export default function ExpenseList({
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-      {/* List header */}
-      <div className="px-6 py-3 bg-gray-50 border-b border-gray-100 hidden md:flex items-center justify-between">
-        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-          Expense
-        </span>
+      {/* List header — desktop only */}
+      <div className="px-4 md:px-6 py-3 bg-gray-50 border-b border-gray-100 hidden md:flex items-center justify-between">
+        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Expense</span>
         <div className="flex items-center gap-24">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            Category / Date
-          </span>
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            Amount
-          </span>
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Category / Date</span>
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Amount</span>
         </div>
       </div>
 
@@ -68,8 +62,8 @@ export default function ExpenseList({
         ))}
       </div>
 
-      {/* Footer: total count */}
-      <div className="px-6 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+      {/* Footer */}
+      <div className="px-4 md:px-6 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
         <span className="text-xs text-gray-500">
           {expenses.length} expense{expenses.length !== 1 ? 's' : ''}
         </span>

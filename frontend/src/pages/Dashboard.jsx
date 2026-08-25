@@ -82,7 +82,7 @@ export default function Dashboard() {
         subtitle="Welcome back! Here's your spending overview."
       />
 
-      <div className="p-8 space-y-8">
+      <div className="p-4 md:p-8 space-y-5 md:space-y-8">
 
         {/* ── Loading ──────────────────────────────────────────────────── */}
         {loading && <LoadingState message="Loading dashboard..." />}

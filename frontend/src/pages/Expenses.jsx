@@ -194,14 +194,14 @@ export default function Expenses() {
         action={
           <button
             onClick={handleAddClick}
-            className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
           >
             <span>+</span> Add Expense
           </button>
         }
       />
 
-      <div className="p-8 space-y-6">
+      <div className="p-4 md:p-8 space-y-5 md:space-y-6">
 
         {/* Success toast */}
         {successMessage && (

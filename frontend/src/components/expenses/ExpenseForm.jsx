@@ -151,8 +151,8 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isSubmitting 
           )}
         </div>
 
-        {/* Amount and Category — side by side */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* Amount and Category — side by side on sm+, stacked on mobile */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Amount (₹) <span className="text-red-500">*</span>

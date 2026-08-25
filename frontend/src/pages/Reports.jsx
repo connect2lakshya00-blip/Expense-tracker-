@@ -189,14 +189,14 @@ export default function Reports() {
         action={
           <button
             onClick={exportCSV}
-            className="flex items-center gap-2 px-4 py-2.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors"
           >
             ⬇️ Export CSV
           </button>
         }
       />
 
-      <div className="p-8 space-y-6">
+      <div className="p-4 md:p-8 space-y-5 md:space-y-6">
 
         {loading && <LoadingState message="Loading reports..." />}
         {error && !loading && <ErrorMessage message={error} onRetry={fetchData} />}

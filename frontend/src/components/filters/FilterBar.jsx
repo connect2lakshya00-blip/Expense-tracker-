@@ -61,13 +61,13 @@ export default function FilterBar({
 
       {/* Row 2: Date range filter */}
       {onDateFromChange && (
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-xs text-gray-400 font-medium">📅 Date range:</span>
+        <div className="flex flex-wrap items-center gap-2 md:gap-3">
+          <span className="text-xs text-gray-400 font-medium">📅</span>
           <input
             type="date"
             value={dateFrom}
             onChange={(e) => onDateFromChange(e.target.value)}
-            className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 min-w-0 px-2 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
             aria-label="From date"
           />
           <span className="text-xs text-gray-400">to</span>
@@ -75,15 +75,15 @@ export default function FilterBar({
             type="date"
             value={dateTo}
             onChange={(e) => onDateToChange(e.target.value)}
-            className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 min-w-0 px-2 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
             aria-label="To date"
           />
           {hasDateFilter && (
             <button
               onClick={() => { onDateFromChange(''); onDateToChange('') }}
-              className="text-xs text-indigo-600 hover:text-indigo-800 font-medium"
+              className="text-xs text-indigo-600 hover:text-indigo-800 font-medium whitespace-nowrap"
             >
-              Clear dates
+              Clear
             </button>
           )}
         </div>

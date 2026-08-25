@@ -81,7 +81,7 @@ export default function Categories() {
         subtitle="Spending overview and budget management."
       />
 
-      <div className="p-8 space-y-6">
+      <div className="p-4 md:p-8 space-y-5 md:space-y-6">
 
         {loading && <LoadingState message="Loading categories..." />}
 

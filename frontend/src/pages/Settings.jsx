@@ -114,7 +114,7 @@ export default function Settings() {
         subtitle="Application preferences and data management."
       />
 
-      <div className="p-8 space-y-6 max-w-2xl">
+      <div className="p-4 md:p-8 space-y-5 md:space-y-6 max-w-2xl">
 
         {saved && (
           <div className="bg-green-50 border border-green-200 text-green-700 text-sm px-4 py-3 rounded-lg">
