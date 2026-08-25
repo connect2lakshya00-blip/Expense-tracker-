@@ -11,7 +11,7 @@ import axios from 'axios'
  * as the baseURL. We use the full URL here to be explicit.
  */
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://expenseflow-backend-j1a1.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
