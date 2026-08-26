@@ -2,12 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 const expenseRoutes = require('./routes/expenseRoutes');
+const authRoutes = require('./routes/authRoutes');
+const { protect } = require('./middleware/auth')
 
 const app = express();
 
 // --- Middleware ---
-// Allow the React frontend to make requests to this server
-// In production, restrict to the deployed Vercel frontend URL
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
@@ -16,7 +16,6 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, Postman)
     if (!origin) return callback(null, true)
     if (
       allowedOrigins.includes(origin) ||
@@ -29,11 +28,9 @@ app.use(cors({
   },
   credentials: true,
 }));
-// Parse incoming request bodies as JSON so req.body works
 app.use(express.json());
 
 // --- Health Check ---
-// A simple endpoint to confirm the API server is alive.
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     success: true,
@@ -42,12 +39,13 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// --- API Routes ---
-// Mount the expense router — all routes inside are prefixed with /api/expenses
-app.use('/api/expenses', expenseRoutes);
+// --- Auth Routes (public) ---
+app.use('/api/auth', authRoutes);
+
+// --- API Routes (protected) ---
+app.use('/api/expenses', protect, expenseRoutes);
 
 // --- 404 Handler ---
-// If a request reaches here, no route above matched it.
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -56,8 +54,6 @@ app.use((req, res) => {
 });
 
 // --- Global Error Handler ---
-// Must be registered LAST, after all routes.
-// Express recognises it as an error handler because of the 4 parameters.
 app.use(errorHandler);
 
 module.exports = app;

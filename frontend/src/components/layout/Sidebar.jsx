@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { logout, getUser } from '../../services/authService'
 
 const NAV_ITEMS = [
   { path: '/',           label: 'Dashboard',  icon: '📊' },
@@ -11,6 +12,13 @@ const NAV_ITEMS = [
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
+  const user = getUser()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login', { replace: true })
+  }
 
   return (
     <>
@@ -77,7 +85,13 @@ export default function Sidebar() {
           ))}
         </nav>
         <div className="px-6 py-4 border-t border-indigo-800">
-          <p className="text-indigo-400 text-xs">ExpenseFlow v2.0</p>
+          <p className="text-indigo-400 text-xs mb-2">👤 {user?.username || 'admin'}</p>
+          <button
+            onClick={handleLogout}
+            className="w-full text-left text-xs text-indigo-300 hover:text-white hover:bg-indigo-800 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"
+          >
+            🚪 Sign Out
+          </button>
         </div>
       </div>
 
@@ -105,7 +119,13 @@ export default function Sidebar() {
           ))}
         </nav>
         <div className="px-6 py-4 border-t border-indigo-800">
-          <p className="text-indigo-400 text-xs">ExpenseFlow v2.0</p>
+          <p className="text-indigo-400 text-xs mb-2">👤 {user?.username || 'admin'}</p>
+          <button
+            onClick={handleLogout}
+            className="w-full text-left text-xs text-indigo-300 hover:text-white hover:bg-indigo-800 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"
+          >
+            🚪 Sign Out
+          </button>
         </div>
       </aside>
     </>
