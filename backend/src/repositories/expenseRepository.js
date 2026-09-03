@@ -3,13 +3,13 @@ const Expense = require('../models/Expense');
 /**
  * Repository layer — all direct MongoDB interactions for expenses.
  *
- * No business logic lives here. Each function does exactly one
- * database operation and returns the raw result to the caller.
+ * Every operation is scoped to a specific userId so that users can
+ * only access their own data.
  */
 
 /**
- * Insert a new expense document into the database.
- * @param {Object} data - Validated expense fields from the service layer
+ * Insert a new expense document.
+ * @param {Object} data - Validated expense fields including userId
  * @returns {Promise<Object>} The newly created expense document
  */
 const createExpense = async (data) => {
@@ -18,57 +18,58 @@ const createExpense = async (data) => {
 };
 
 /**
- * Retrieve all expense documents, with optional filtering and sorting.
+ * Retrieve all expenses belonging to a specific user.
  *
  * @param {Object} options
- * @param {Object} options.filter  - Mongoose query filter (e.g. { category: 'Food' })
- * @param {Object} options.sort    - Mongoose sort object (e.g. { date: -1 } for newest first)
- * @returns {Promise<Array>} Array of expense documents
+ * @param {Object} options.filter  - Additional Mongoose query filters
+ * @param {Object} options.sort    - Mongoose sort object
+ * @param {string} options.userId  - The authenticated user's _id
+ * @returns {Promise<Array>}
  */
-const findAllExpenses = async ({ filter = {}, sort = { date: -1 } } = {}) => {
-  const expenses = await Expense.find(filter).sort(sort);
+const findAllExpenses = async ({ filter = {}, sort = { date: -1 }, userId } = {}) => {
+  const query = { ...filter, user: userId };
+  const expenses = await Expense.find(query).sort(sort);
   return expenses;
 };
 
 /**
- * Retrieve a single expense document by its MongoDB _id.
- * Returns null if no document with that id exists.
+ * Retrieve a single expense by id, scoped to a user.
  *
- * @param {string} id - The expense's MongoDB _id as a string
+ * @param {string} id     - The expense's MongoDB _id
+ * @param {string} userId - The authenticated user's _id
  * @returns {Promise<Object|null>}
  */
-const findExpenseById = async (id) => {
-  const expense = await Expense.findById(id);
+const findExpenseById = async (id, userId) => {
+  const expense = await Expense.findOne({ _id: id, user: userId });
   return expense;
 };
 
 /**
- * Update an expense document and return the updated version.
+ * Update an expense, scoped to a user.
  *
- * { new: true }    → return the document AFTER the update (not before)
- * { runValidators: true } → run schema validators on the updated fields
- *
- * @param {string} id   - The expense's MongoDB _id
- * @param {Object} data - Fields to update
- * @returns {Promise<Object|null>} The updated expense, or null if not found
+ * @param {string} id     - The expense's MongoDB _id
+ * @param {string} userId - The authenticated user's _id
+ * @param {Object} data   - Fields to update
+ * @returns {Promise<Object|null>}
  */
-const updateExpense = async (id, data) => {
-  const expense = await Expense.findByIdAndUpdate(id, data, {
-    new: true,
-    runValidators: true,
-  });
+const updateExpense = async (id, userId, data) => {
+  const expense = await Expense.findOneAndUpdate(
+    { _id: id, user: userId },
+    data,
+    { new: true, runValidators: true }
+  );
   return expense;
 };
 
 /**
- * Delete an expense document by its MongoDB _id.
- * Returns the deleted document, or null if not found.
+ * Delete an expense, scoped to a user.
  *
- * @param {string} id - The expense's MongoDB _id
- * @returns {Promise<Object|null>} The deleted expense, or null if not found
+ * @param {string} id     - The expense's MongoDB _id
+ * @param {string} userId - The authenticated user's _id
+ * @returns {Promise<Object|null>}
  */
-const deleteExpense = async (id) => {
-  const expense = await Expense.findByIdAndDelete(id);
+const deleteExpense = async (id, userId) => {
+  const expense = await Expense.findOneAndDelete({ _id: id, user: userId });
   return expense;
 };
 
